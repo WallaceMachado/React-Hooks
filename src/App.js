@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; //useState para usar o Hooks permite que as functions tenham state
+import React, { useState, useEffect, useMemo } from 'react'; //useState para usar o Hooks permite que as functions tenham state
 
 
 function App() {
@@ -33,6 +33,9 @@ function App() {
     setInput('');
   }
 
+  //useMemo é usado para que uma ação só seja afeita após a atualização de uma state
+  const totalTarefas = useMemo(()=> tarefas.length, [tarefas]);
+
 
 
   return (
@@ -43,7 +46,8 @@ function App() {
           <li key={tarefa}>{tarefa}</li>
         ))}
       </ul>
-
+      <br/>
+      <strong>Você tem {totalTarefas} tarefas!</strong><br/>
       <input type="text" value={input} onChange={e => setInput(e.target.value)}/>    
       <button type="button" onClick={handleAdd}>Adicionar</button>
 
