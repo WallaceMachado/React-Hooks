@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'; //useState para usar o Hooks permite que as functions tenham state
+import React, { useState, useEffect, useMemo, useCallback } from 'react'; //useState para usar o Hooks permite que as functions tenham state
 
 
 function App() {
@@ -28,10 +28,13 @@ function App() {
       localStorage.setItem('tarefas', JSON.stringify(tarefas));
     }, [tarefas]);
 
-  function handleAdd(){
-    setTarefas([...tarefas, input])
-    setInput('');
-  }
+    //useCallback como se fosse o useMemo, porém retorna uma function
+    // e evita que a função seja deletada e criada toda vez que a 
+    //pagina é carregada, isso só vai acontecer quando houver necessidade
+    const handleAdd = useCallback(() => {
+      setTarefas([...tarefas, input]);
+      setInput('');
+    }, [input, tarefas]);
 
   //useMemo é usado para que uma ação só seja afeita após a atualização de uma state
   const totalTarefas = useMemo(()=> tarefas.length, [tarefas]);
